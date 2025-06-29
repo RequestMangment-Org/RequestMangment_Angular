@@ -10,7 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule, FileUploadEvent } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
-import { AboutUsService } from '../../Service/about-us.service';
+import { AboutUsService } from '../../../Service/about-us.service';
 
 @Component({
   selector: 'app-about-us-form',

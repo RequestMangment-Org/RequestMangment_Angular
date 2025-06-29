@@ -9,7 +9,7 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import { AboutUsService } from '../../Service/about-us.service';
+import { AboutUsService } from '../../../Service/about-us.service';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 @Component({

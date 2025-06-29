@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { ApplicationRequest } from '../../Interfaces/ApplicationRequest';
+import { environment } from '../../environments/environments';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestServiceService {
-  private apiUrl = 'https://localhost:7272';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -43,7 +44,7 @@ UploadFiles(
     passportCopyPath?: string | null,
     officialPermissionLetterPath?: string | null,
     paymentReceiptPath?: string | null
-  }>(`${this.apiUrl}/api/UploadFiles`, formData).pipe(
+  }>(`${this.apiUrl}/UploadFiles`, formData).pipe(
     catchError(error => {
       console.error('Upload error:', error);
       throw 'حدث خطأ أثناء رفع الملفات. يرجى المحاولة مرة أخرى';
@@ -51,24 +52,24 @@ UploadFiles(
   );
 }
   submitRequest(request: ApplicationRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/Requests`, request);
+    return this.http.post(`${this.apiUrl}/Requests`, request);
   }
   
   getAllRequests(): Observable<ApplicationRequest[]> {
-    return this.http.get<ApplicationRequest[]>(`${this.apiUrl}/api/requests`);
+    return this.http.get<ApplicationRequest[]>(`${this.apiUrl}/requests`);
   }
 
   deleteRequest(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/api/requests/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/requests/${id}`);
   }
     getRequestByPhone(phoneNumber: string): Observable<ApplicationRequest> {
-    return this.http.get<ApplicationRequest>(`${this.apiUrl}/api/requests/by-phone/${phoneNumber}`);
+    return this.http.get<ApplicationRequest>(`${this.apiUrl}/requests/by-phone/${phoneNumber}`);
   }
   
 updateRequest(id: number, request: ApplicationRequest): Observable<any> {
-  return this.http.put(`${this.apiUrl}/api/requests/${id}`, request);
+  return this.http.put(`${this.apiUrl}/requests/${id}`, request);
 }
 getRequestById(id: number): Observable<ApplicationRequest> {
-  return this.http.get<ApplicationRequest>(`${this.apiUrl}/api/requests/${id}`);
+  return this.http.get<ApplicationRequest>(`${this.apiUrl}/requests/${id}`);
 }
 }

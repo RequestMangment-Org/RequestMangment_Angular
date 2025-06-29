@@ -1,0 +1,117 @@
+.custom-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.card-header-custom {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  padding: 1.25rem 1.5rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.card-body-custom {
+  background-color: white;
+  padding: 1.5rem;
+}
+
+.search-container {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+}
+
+.loading-text {
+  font-size: 1.1rem;
+  color: #64748b;
+}
+
+.alert-icon {
+  margin-left: 0.5rem;
+}
+
+.error-message {
+  font-weight: 500;
+}
+
+.table-container {
+  margin-top: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: #f1f5f9;
+  color: #1e293b;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border: none;
+  text-align: right;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: right;
+}
+
+.file-container {
+  display: flex;
+  justify-content: center;
+}
+
+.file-container a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.img-thumbnail {
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 100px;
+  cursor: pointer;
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.phone-number {
+  font-family: monospace;
+  direction: ltr;
+}
+
+@media (max-width: 1200px) {
+  .p-datatable {
+    overflow-x: auto;
+  }
+  
+  .p-datatable table {
+    min-width: 1200px;
+  }
+}

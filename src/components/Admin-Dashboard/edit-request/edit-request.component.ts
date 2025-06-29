@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
-import { RequestServiceService } from '../../Service/RequestService/request-service.service';
-import { ApplicationRequest } from '../../Interfaces/ApplicationRequest';
+import { RequestServiceService } from '../../../Service/RequestService/request-service.service';
+import { ApplicationRequest } from '../../../Interfaces/ApplicationRequest';
 import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from '../../environments/environments';
+import { environment } from '../../../environments/environments';
 import { MessageModule } from 'primeng/message';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';

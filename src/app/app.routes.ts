@@ -6,13 +6,13 @@ import { RegisterComponentComponent } from '../components/register-component/reg
 import { RequestComponent } from '../components/request/request.component';
 import { RequestGuard } from '../Gurds/rquest.guard';
 import { DashboardComponent } from '../components/Admin-Dashboard/dashboard/dashboard.component';
-import { DisplyRequestsComponent } from '../components/disply-requests/disply-requests.component';
-import { AboutUsListComponent } from '../components/about-us-list/about-us-list.component';
-import { AboutUsFormComponent } from '../components/about-us-form/about-us-form.component';
+import { DisplyRequestsComponent } from '../components/Admin-Dashboard/disply-requests/disply-requests.component';
+import { AboutUsListComponent } from '../components/Admin-Dashboard/about-us-list/about-us-list.component';
 import { LoginComponent } from '../components/login/login.component';
 import { authGuard } from '../Gurds/auth.guard';
 import { UserRquestComponent } from '../components/user-rquest/user-rquest.component';
-import { EditRequestComponent } from '../components/edit-request/edit-request.component';
+import { EditRequestComponent } from '../components/Admin-Dashboard/edit-request/edit-request.component';
+import { AboutUsFormComponent } from '../components/Admin-Dashboard/about-us-form/about-us-form.component';
 
 
 

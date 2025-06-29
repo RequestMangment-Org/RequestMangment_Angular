@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApplicationRequest } from '../../Interfaces/ApplicationRequest';
-import { RequestServiceService } from '../../Service/RequestService/request-service.service';
+import { ApplicationRequest } from '../../../Interfaces/ApplicationRequest';
+import { RequestServiceService } from '../../../Service/RequestService/request-service.service';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -133,11 +133,12 @@ export class DisplyRequestsComponent implements OnInit {
       });
     }
   }
+  
   editRequest(id: number | undefined): void {
     if (id === undefined) {
       this.errorMessage = 'لا يمكن تعديل الطلب: معرف الطلب غير موجود';
       return;
-    }debugger
+    }
     this.router.navigate(['/admin/edit-request', id]);
   }
 }
