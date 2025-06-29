@@ -1,0 +1,160 @@
+<!-- تعريف بالنادي الرياضي -->
+<section class="about-us py-5 fade-in">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">عن نادينا الرياضي</h1>
+            <p class="text-muted mt-2">نحن ملتقى الرياضة، الصحة، والتحدي!</p>
+        </div>
+        <div class="row align-items-center g-4">
+            <div class="col-md-6">
+                <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&h=780&q=80" 
+                     alt="مدرب يشرح تمرين لمجموعة" 
+                     class="img-fluid rounded shadow img-hover">
+            </div>
+            <div class="col-md-6">
+                <h2 class="mb-3">نادي رياضي متميز</h2>
+                <p class="lead">نقدم تدريبات احترافية لجميع الأعمار، نساعد اللاعبين على تطوير مهاراتهم وتحقيق أهدافهم الصحية والرياضية ضمن مجتمع محب ومتكامل.</p>
+                <div class="mt-4">
+                    <a href="/user-login" class="btn btn-primary btn-lg pulse-animation">انضم إلينا الآن</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- رؤيتنا، رسالتنا، قيمنا -->
+<section class="bg-light py-5 fade-in">
+    <div class="container text-center">
+        <h2 class="mb-5">رؤيتنا، رسالتنا، قيمنا</h2>
+        <div class="row mt-4 g-4">
+            <div class="col-md-4">
+                <div class="p-4 rounded shadow-soft bg-white value-box hover-grow">
+                    <i class="fas fa-trophy fa-2x text-success mb-3"></i>
+                    <h3 class="mt-3">رؤيتنا</h3>
+                    <p class="text-muted">أن نكون الوجهة الأولى للرياضيين من جميع المستويات، ومركزًا لإعداد أبطال المستقبل وتنمية مجتمع رياضي متميز ومتكامل.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 rounded shadow-soft bg-white value-box hover-grow">
+                    <i class="fas fa-running fa-2x text-primary mb-3"></i>
+                    <h3 class="mt-3">رسالتنا</h3>
+                    <p class="text-muted">تقديم برامج تدريب مميزة وفق أعلى المعايير، وتعزيز الصحة، اللياقة، وحب الرياضة لدى أفراد مجتمعنا على اختلاف أعمارهم ومستوياتهم الرياضية.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 rounded shadow-soft bg-white value-box hover-grow">
+                    <i class="fas fa-users fa-2x text-danger mb-3"></i>
+                    <h3 class="mt-3">قيمنا</h3>
+                    <p class="text-muted">الاحتراف، الاحترام، العمل الجماعي، النزاهة، والشغف بالرياضة، والسعي المستمر نحو التفوق وتحقيق النتائج الملهمة.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- قسم الوسائط المتعددة -->
+<section class="media-section py-5 fade-in" *ngIf="aboutUsList && aboutUsList.length > 0">
+    <div class="container text-center">
+        <h2 class="mb-4"> لقطات ملهمة</h2>
+        <p class="text-muted mb-5">استمتع بمشاهدة الصور والفيديوهات التي تعرض أنشطتنا ومرافقنا</p>
+        
+        <div class="row g-4 mt-3">
+            <div class="col-md-4 col-sm-6" *ngFor="let item of aboutUsList">
+                <!-- عرض الفيديو -->
+                <div class="media-card" *ngIf="isVideo(item.filePath)">
+                    <div class="media-thumbnail" (click)="openVideo(item.filePath)">
+                        <video #videoThumb 
+                               controls
+                               class="img-fluid rounded shadow" 
+                               (loadedmetadata)="setVideoThumbnail(videoThumb)"
+                               muted>
+                            <source [src]="item.filePath" type="video/mp4">
+                        </video>
+                      
+                    </div>
+                    <div class="media-info p-3 bg-white rounded-bottom">
+                        <h5>{{item.titileAr}}</h5>
+                        <p class="text-muted mb-0">{{item.descriptionAr}}</p>
+                    </div>
+                </div>
+
+                
+                <div class="media-card" *ngIf="!isVideo(item.filePath)">
+                    <div class="media-thumbnail" (click)="openVideo(item.filePath)">
+                        <img [src]="item.filePath" 
+                             class="img-fluid rounded shadow" 
+                             alt="{{item.titileAr}}">
+                       
+                    </div>
+                    <div class="media-info p-3 bg-white rounded-bottom">
+                        <h5>{{item.titileAr}}</h5>
+                        <p class="text-muted mb-0">{{item.descriptionAr}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- الأنشطة الرياضية / معرض الصور -->
+<section class="image-gallery py-5 fade-in">
+    <div class="container text-center">
+        <h2 class="mb-4">أنشطتنا الرياضية</h2>
+        <p class="text-muted mb-5">نقدم تدريبات مميزة لأبرز الرياضات الفردية والجماعية</p>
+        <div class="row g-4 mt-3">
+            <div class="col-md-3 col-6">
+                <div class="card h-100">
+                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=500&q=80" 
+                         class="card-img-top" 
+                         alt="كرة القدم">
+                    <div class="card-body">
+                        <h5 class="card-title">كرة القدم</h5>
+                        <p class="card-text">تدريبات احترافية مع مدربين متخصصين لتحسين التكتيكات واللياقة</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="card h-100">
+                    <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=500&q=80" 
+                         class="card-img-top" 
+                         alt="السباحة">
+                    <div class="card-body">
+                        <h5 class="card-title">السباحة</h5>
+                        <p class="card-text">برامج تدريبية للمبتدئين والمحترفين في مسبح أولمبي معتمد</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="card h-100">
+                    <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=500&q=80" 
+                         class="card-img-top" 
+                         alt="كرة السلة">
+                    <div class="card-body">
+                        <h5 class="card-title">كرة السلة</h5>
+                        <p class="card-text">تدريبات ديناميكية لتعزيز العمل الجماعي واللياقة البدنية</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="card h-100">
+                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=500&q=80"
+                         class="card-img-top" 
+                         alt="التنس">
+                    <div class="card-body">
+                        <h5 class="card-title">التنس</h5>
+                        <p class="card-text">دروس فردية وجماعية مع أفضل المدربين المحليين</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA للتسجيل أو التواصل -->
+<section class="cta bg-primary text-white py-5 text-center fade-in">
+    <div class="container">
+        <h2 class="mb-4">ابدأ رحلتك الرياضية معنا اليوم</h2>
+        <p class="mb-4 lead">نحن هنا لمساعدتك على تحقيق أهدافك الصحية، وتنمية مهاراتك الرياضية</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="/user-login" class="btn btn-light btn-lg hover-grow">سجل الآن</a>
+        
+        </div>
+      </div></section>

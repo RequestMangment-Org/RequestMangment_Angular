@@ -1,0 +1,123 @@
+.custom-card {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.card-header-custom {
+  text-align: center;
+  padding: 10px;
+  background-color: #f9f8fa;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 1.5em;
+    padding: 10px;
+    background-color: #4a6bff;
+}
+
+.card-body-custom {
+  padding: 20px;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+}
+.custom-card {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.card-header-custom {
+  text-align: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.card-body-custom {
+  padding: 20px;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+}
+
+.p-inputtext {
+  width: 100%;
+}
+
+.p-error {
+  color: #dc3545;
+  font-size: 0.875rem;
+}
+
+.p-success {
+  color: #28a745;
+  font-size: 0.875rem;
+}
+
+.p-button-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.p-button-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.file-preview {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.img-thumbnail {
+  max-width: 100px;
+  height: auto;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.file-link {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.file-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.p-inputtext {
+  width: 100%;
+}
+
+.p-error {
+  color: #dc3545;
+  font-size: 0.875rem;
+}
+
+.p-success {
+  color: #28a745;
+  font-size: 0.875rem;
+}
+
+.p-button-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.p-button-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}

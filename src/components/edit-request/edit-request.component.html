@@ -1,0 +1,396 @@
+<div class="custom-card">
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="card-header-custom">
+        <h3 class="header-title">تعديل الطلب</h3>
+      </div>
+    </ng-template>
+    <div class="card-body-custom">
+      <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+        <!-- Full Name -->
+        <div class="p-field">
+          <label for="fullName">الاسم الكامل</label>
+          <input
+            id="fullName"
+            type="text"
+            pInputText
+            formControlName="fullName"
+            class="p-inputtext"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                requestForm.get('fullName')?.invalid && isSubmitted
+            }"
+          />
+          <small
+            *ngIf="
+              requestForm.get('fullName')?.invalid &&
+              (requestForm.get('fullName')?.touched || isSubmitted)
+            "
+            class="p-error"
+            >الاسم الكامل مطلوب (بحد أقصى 100 حرف)</small
+          >
+        </div>
+
+        <!-- Phone Number -->
+        <div class="p-field">
+          <label for="phoneNumber">رقم الهاتف</label>
+          <input
+            id="phoneNumber"
+            type="text"
+            pInputText
+            formControlName="phoneNumber"
+            class="p-inputtext"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                requestForm.get('phoneNumber')?.invalid && isSubmitted
+            }"
+          />
+          <small
+            *ngIf="
+              requestForm.get('phoneNumber')?.invalid &&
+              (requestForm.get('phoneNumber')?.touched || isSubmitted)
+            "
+            class="p-error"
+            >رقم الهاتف يجب أن يبدأ بـ 05 ويحتوي على 10 أرقام</small
+          >
+        </div>
+
+        <!-- Birth Date -->
+        <div class="p-field">
+          <label for="birthDate">تاريخ الميلاد</label>
+          <input
+            id="birthDate"
+            type="date"
+            pInputText
+            formControlName="birthDate"
+            class="p-inputtext"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                requestForm.get('birthDate')?.invalid && isSubmitted
+            }"
+          />
+          <small
+            *ngIf="
+              requestForm.get('birthDate')?.invalid &&
+              (requestForm.get('birthDate')?.touched || isSubmitted)
+            "
+            class="p-error"
+            >تاريخ الميلاد مطلوب ويجب أن يكون في الماضي</small
+          >
+        </div>
+
+        <!-- Is In Club -->
+        <div class="p-field-checkbox">
+          <p-checkbox
+            formControlName="isInClub"
+            [binary]="true"
+            label="عضو في نادي؟"
+          ></p-checkbox>
+        </div>
+
+        <!-- Club Name -->
+        <div class="p-field" *ngIf="requestForm.get('isInClub')?.value">
+          <label for="clubName">اسم النادي</label>
+          <input
+            id="clubName"
+            type="text"
+            pInputText
+            formControlName="clubName"
+            class="p-inputtext"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                requestForm.get('clubName')?.invalid && isSubmitted
+            }"
+          />
+          <small
+            *ngIf="
+              requestForm.get('clubName')?.invalid &&
+              (requestForm.get('clubName')?.touched || isSubmitted)
+            "
+            class="p-error"
+            >اسم النادي مطلوب</small
+          >
+        </div>
+
+        <!-- Has Schengen Visa -->
+        <div class="p-field-checkbox">
+          <p-checkbox
+            formControlName="hasSchengenVisa"
+            [binary]="true"
+            label="هل لديك تأشيرة شنغن؟"
+          ></p-checkbox>
+        </div>
+
+        <!-- Visa File -->
+        <div class="p-field" *ngIf="requestForm.get('hasSchengenVisa')?.value">
+          <label for="visaFile">ملف التأشيرة</label>
+          <input
+            id="visaFile"
+            type="file"
+            (change)="onFileChange($event, 'visaFile')"
+            accept=".pdf,.jpg,.jpeg,.png"
+            class="p-inputtext"
+          />
+          <div class="file-preview" *ngIf="visaFilePath">
+            <a
+              *ngIf="isPdf(visaFilePath)"
+              (click)="openInNewTab(visaFilePath)"
+              class="file-link"
+              >عرض PDF</a
+            >
+            <img
+              *ngIf="isImage(visaFilePath)"
+              [src]="visaFilePath"
+              alt="ملف التأشيرة"
+              class="img-thumbnail"
+              (click)="openInNewTab(visaFilePath)"
+            />
+            <span *ngIf="!isPdf(visaFilePath) && !isImage(visaFilePath)"
+              >غير مدعوم</span
+            >
+          </div>
+          <small
+            *ngIf="
+              requestForm.get('visaFile')?.invalid &&
+              (requestForm.get('visaFile')?.touched || isSubmitted)
+            "
+            class="p-error"
+            >ملف التأشيرة مطلوب</small
+          >
+        </div>
+
+        <!-- Has Parent Approval -->
+        <div class="p-field-checkbox">
+          <p-checkbox
+            formControlName="hasParentApproval"
+            [binary]="true"
+            label="موافقة ولي الأمر؟"
+          ></p-checkbox>
+        </div>
+
+        <!-- Approval File -->
+        <div class="p-field" *ngIf="requestForm.get('hasParentApproval')?.value">
+          <label for="approvalFile">ملف الموافقة</label>
+          <input
+            id="approvalFile"
+            type="file"
+            (change)="onFileChange($event, 'approvalFile')"
+            accept=".pdf,.jpg,.jpeg,.png"
+            class="p-inputtext"
+          />
+          <div class="file-preview" *ngIf="approvalFilePath">
+            <a
+              *ngIf="isPdf(approvalFilePath)"
+              (click)="openInNewTab(approvalFilePath)"
+              class="file-link"
+              >عرض PDF</a
+            >
+            <img
+              *ngIf="isImage(approvalFilePath)"
+              [src]="approvalFilePath"
+              alt="ملف الموافقة"
+              class="img-thumbnail"
+              (click)="openInNewTab(approvalFilePath)"
+            />
+            <span *ngIf="!isPdf(approvalFilePath) && !isImage(approvalFilePath)"
+              >غير مدعوم</span
+            >
+          </div>
+          <small
+            *ngIf="
+              requestForm.get('approvalFile')?.invalid &&
+              (requestForm.get('approvalFile')?.touched || isSubmitted)
+            "
+            class="p-error"
+            >ملف الموافقة مطلوب</small
+          >
+        </div>
+
+        <!-- Subscription -->
+        <div class="p-field-checkbox">
+          <p-checkbox
+            formControlName="subscription"
+            [binary]="true"
+            label="الاشتراك؟"
+          ></p-checkbox>
+        </div>
+
+        <!-- Identity Document -->
+        <div class="p-field" *ngIf="requestForm.get('subscription')?.value">
+          <label for="identityDocument">وثيقة الهوية</label>
+          <input
+            id="identityDocument"
+            type="file"
+            (change)="onFileChange($event, 'identityDocument')"
+            accept=".pdf,.jpg,.jpeg,.png"
+            class="p-inputtext"
+          />
+          <div class="file-preview" *ngIf="identityDocumentPath">
+            <a
+              *ngIf="isPdf(identityDocumentPath)"
+              (click)="openInNewTab(identityDocumentPath)"
+              class="file-link"
+              >عرض PDF</a
+            >
+            <img
+              *ngIf="isImage(identityDocumentPath)"
+              [src]="identityDocumentPath"
+              alt="وثيقة الهوية"
+              class="img-thumbnail"
+              (click)="openInNewTab(identityDocumentPath)"
+            />
+            <span
+              *ngIf="!isPdf(identityDocumentPath) && !isImage(identityDocumentPath)"
+              >غير مدعوم</span
+            >
+          </div>
+          <small
+            *ngIf="
+              requestForm.get('identityDocument')?.invalid &&
+              (requestForm.get('identityDocument')?.touched || isSubmitted)
+            "
+            class="p-error"
+            >وثيقة الهوية مطلوبة</small
+          >
+        </div>
+
+        <!-- Passport Copy -->
+        <div class="p-field" *ngIf="requestForm.get('subscription')?.value">
+          <label for="passportCopy">نسخة جواز السفر</label>
+          <input
+            id="passportCopy"
+            type="file"
+            (change)="onFileChange($event, 'passportCopy')"
+            accept=".pdf,.jpg,.jpeg,.png"
+            class="p-inputtext"
+          />
+          <div class="file-preview" *ngIf="passportCopyPath">
+            <a
+              *ngIf="isPdf(passportCopyPath)"
+              (click)="openInNewTab(passportCopyPath)"
+              class="file-link"
+              >عرض PDF</a
+            >
+            <img
+              *ngIf="isImage(passportCopyPath)"
+              [src]="passportCopyPath"
+              alt="نسخة جواز السفر"
+              class="img-thumbnail"
+              (click)="openInNewTab(passportCopyPath)"
+            />
+            <span *ngIf="!isPdf(passportCopyPath) && !isImage(passportCopyPath)"
+              >غير مدعوم</span
+            >
+          </div>
+          <small
+            *ngIf="
+              requestForm.get('passportCopy')?.invalid &&
+              (requestForm.get('passportCopy')?.touched || isSubmitted)
+            "
+            class="p-error"
+            >نسخة جواز السفر مطلوبة</small
+          >
+        </div>
+
+        <!-- Official Permission Letter -->
+        <div class="p-field" *ngIf="requestForm.get('subscription')?.value">
+          <label for="officialPermissionLetter">خطاب الإذن الرسمي (اختياري)</label>
+          <input
+            id="officialPermissionLetter"
+            type="file"
+            (change)="onFileChange($event, 'officialPermissionLetter')"
+            accept=".pdf,.jpg,.jpeg,.png"
+            class="p-inputtext"
+          />
+          <div class="file-preview" *ngIf="officialPermissionLetterPath">
+            <a
+              *ngIf="isPdf(officialPermissionLetterPath)"
+              (click)="openInNewTab(officialPermissionLetterPath)"
+              class="file-link"
+              >عرض PDF</a
+            >
+            <img
+              *ngIf="isImage(officialPermissionLetterPath)"
+              [src]="officialPermissionLetterPath"
+              alt="خطاب الإذن الرسمي"
+              class="img-thumbnail"
+              (click)="openInNewTab(officialPermissionLetterPath)"
+            />
+            <span
+              *ngIf="
+                !isPdf(officialPermissionLetterPath) &&
+                !isImage(officialPermissionLetterPath)
+              "
+              >غير مدعوم</span
+            >
+          </div>
+        </div>
+
+        <!-- Payment Receipt -->
+        <div class="p-field" *ngIf="requestForm.get('subscription')?.value">
+          <label for="paymentReceipt">إيصال الدفع</label>
+          <input
+            id="paymentReceipt"
+            type="file"
+            (change)="onFileChange($event, 'paymentReceipt')"
+            accept=".pdf,.jpg,.jpeg,.png"
+            class="p-inputtext"
+          />
+          <div class="file-preview" *ngIf="paymentReceiptPath">
+            <a
+              *ngIf="isPdf(paymentReceiptPath)"
+              (click)="openInNewTab(paymentReceiptPath)"
+              class="file-link"
+              >عرض PDF</a
+            >
+            <img
+              *ngIf="isImage(paymentReceiptPath)"
+              [src]="paymentReceiptPath"
+              alt="إيصال الدفع"
+              class="img-thumbnail"
+              (click)="openInNewTab(paymentReceiptPath)"
+            />
+            <span *ngIf="!isPdf(paymentReceiptPath) && !isImage(paymentReceiptPath)"
+              >غير مدعوم</span
+            >
+          </div>
+          <small
+            *ngIf="
+              requestForm.get('paymentReceipt')?.invalid &&
+              (requestForm.get('paymentReceipt')?.touched || isSubmitted)
+            "
+            class="p-error"
+            >إيصال الدفع مطلوب</small
+          >
+        </div>
+
+        <!-- Messages -->
+        <p-message
+          *ngIf="successMessage"
+          severity="success"
+          (close)="successMessage = null"
+        >
+          <span>{{ successMessage }}</span>
+        </p-message>
+        <p-message
+          *ngIf="errorMessage"
+          severity="error"
+          (close)="errorMessage = null"
+        >
+          <span>{{ errorMessage }}</span>
+        </p-message>
+
+        <!-- Submit Button -->
+        <div class="p-field">
+          <button
+            pButton
+            type="submit"
+            label="تحديث الطلب"
+            class="p-button-raised p-button-success"
+            [disabled]="isLoading"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </p-card>
+</div>
