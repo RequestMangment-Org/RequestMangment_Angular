@@ -39,17 +39,12 @@ export class AboutUsService {
     return this.http.delete(`${this.apiUrl + '/AboutUs'}/${id}`);
   }
 
-
-
-
   uploadVideo(videoFile: File | null): Observable<{ videoFilePath?: string | null }> {
     const formData = new FormData();
-
     if (videoFile) {
-      // Validate file type if needed
-      const validExtensions = ['video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/x-matroska',"image/jpeg",
-            "image/png",
-            "image/gif"];
+      const validExtensions = ['video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/x-matroska', "image/jpeg",
+        "image/png",
+        "image/gif"];
       if (!validExtensions.includes(videoFile.type)) {
         return throwError(() => new Error('Invalid file type. Only video files are allowed.'));
       }
@@ -57,7 +52,6 @@ export class AboutUsService {
       if (videoFile.size > maxSize) {
         return throwError(() => new Error('File size exceeds the 100MB limit.'));
       }
-
       formData.append('videoFile', videoFile, videoFile.name);
     }
 

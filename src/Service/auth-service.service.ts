@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 export class AuthServiceService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
-userData = JSON.parse(localStorage.getItem('user') || '{}');
+  userData = JSON.parse(localStorage.getItem('user') || '{}');
   constructor(private router: Router) {
     this.loadInitialState();
-   
+
   }
 
   private loadInitialState() {
@@ -44,7 +44,6 @@ userData = JSON.parse(localStorage.getItem('user') || '{}');
   }
 
   isAuthenticated(): boolean {
-    
     return !!this.token && this.userData?.usertype === 1;
   }
 }
