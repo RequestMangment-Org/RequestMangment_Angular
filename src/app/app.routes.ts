@@ -8,7 +8,7 @@ import { RequestGuard } from '../Gurds/rquest.guard';
 import { DashboardComponent } from '../components/Admin-Dashboard/dashboard/dashboard.component';
 import { DisplyRequestsComponent } from '../components/Admin-Dashboard/disply-requests/disply-requests.component';
 import { AboutUsListComponent } from '../components/Admin-Dashboard/about-us-list/about-us-list.component';
-import { LoginComponent } from '../components/login/login.component';
+import { LoginComponent } from '../components/Admin-Dashboard/login/login.component';
 import { authGuard } from '../Gurds/auth.guard';
 import { UserRquestComponent } from '../components/user-rquest/user-rquest.component';
 import { EditRequestComponent } from '../components/Admin-Dashboard/edit-request/edit-request.component';

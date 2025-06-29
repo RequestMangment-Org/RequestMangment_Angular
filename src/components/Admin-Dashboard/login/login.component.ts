@@ -2,15 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthServiceService } from '../../Service/auth-service.service';
-import { LoginResponse } from '../../Interfaces/login-response';
+import { AuthServiceService } from '../../../Service/auth-service.service';
+import { LoginResponse } from '../../../Interfaces/login-response';
 import { NgIf } from '@angular/common';
-import { RegistrationService } from '../../Service/registration.service';
+import { RegistrationService } from '../../../Service/registration.service';
 
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule,NgIf],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -33,7 +33,7 @@ export class LoginComponent {
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.authService.logout();
   }
 
