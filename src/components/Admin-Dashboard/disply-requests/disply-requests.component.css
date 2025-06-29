@@ -7,9 +7,10 @@
 
 .card-header-custom {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
-  padding: 1.25rem 1.5rem;
+ padding: 1.25rem 1.5rem;
   color: white;
   display: flex;
+  flex-direction: column; 
   align-items: center;
   justify-content: space-between;
 }

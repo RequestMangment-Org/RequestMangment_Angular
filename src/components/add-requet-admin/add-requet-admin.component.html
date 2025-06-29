@@ -1,0 +1,320 @@
+
+<div class="request-container pt-0" dir="rtl">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h2 class="text-center mb-0">نموذج تقديم الطلب</h2>
+    </div>
+
+    <div class="card-body">
+      <div class="mb-4 text-center">
+        <button class="btn btn-secondary" (click)="startNewRequest()">
+          <i class="fas fa-plus-circle me-2"></i> طلب جديد
+        </button>
+      </div>
+      @if (successMessage) {
+        <div class="alert alert-success text-center">
+          <i class="fas fa-check-circle me-2"></i>
+          {{ successMessage }}
+        </div>
+      }
+
+      @if (errorMessage) {
+        <div class="alert alert-danger text-center">
+          <i class="fas fa-exclamation-circle me-2"></i>
+          {{ errorMessage }}
+        </div>
+      }
+
+      <form [formGroup]="requestForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+        <fieldset class="mb-4">
+          <!-- Full Name -->
+          <div class="mb-4">
+            <label for="fullName" class="form-label">الاسم الكامل</label>
+            <input type="text" class="form-control" id="fullName" formControlName="fullName"
+                   [class.is-invalid]="requestForm.get('fullName')?.invalid && (requestForm.get('fullName')?.touched || isSubmitted)">
+            @if (requestForm.get('fullName')?.invalid && (requestForm.get('fullName')?.touched || isSubmitted)) {
+              <div class="invalid-feedback">
+                @if (requestForm.get('fullName')?.errors?.['required']) {
+                  <div>حقل الاسم الكامل مطلوب</div>
+                }
+                @if (requestForm.get('fullName')?.errors?.['maxlength']) {
+                  <div>يجب ألا يتجاوز الاسم 100 حرف</div>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Phone Number -->
+          <div class="mb-4">
+            <label for="phoneNumber" class="form-label">رقم الجوال</label>
+            <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+                   [class.is-invalid]="requestForm.get('phoneNumber')?.invalid && (requestForm.get('phoneNumber')?.touched || isSubmitted)">
+            @if (requestForm.get('phoneNumber')?.invalid && (requestForm.get('phoneNumber')?.touched || isSubmitted)) {
+              <div class="invalid-feedback">
+                @if (requestForm.get('phoneNumber')?.errors?.['required']) {
+                  <div>حقل رقم الجوال مطلوب</div>
+                }
+                @if (requestForm.get('phoneNumber')?.errors?.['pattern']) {
+                  <div>يجب أن يبدأ الرقم بـ 05 ويتكون من 10 أرقام</div>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Birth Date -->
+          <div class="mb-4">
+            <label for="birthDate" class="form-label">تاريخ الميلاد</label>
+            <input type="date" class="form-control" id="birthDate" formControlName="birthDate"
+                   [class.is-invalid]="requestForm.get('birthDate')?.invalid && (requestForm.get('birthDate')?.touched || isSubmitted)">
+            @if (requestForm.get('birthDate')?.invalid && (requestForm.get('birthDate')?.touched || isSubmitted)) {
+              <div class="invalid-feedback">
+                @if (requestForm.get('birthDate')?.errors?.['required']) {
+                  <div>حقل تاريخ الميلاد مطلوب</div>
+                }
+                @if (requestForm.get('birthDate')?.errors?.['futureDate']) {
+                  <div>لا يمكن أن يكون تاريخ الميلاد في المستقبل</div>
+                }
+                @if (requestForm.get('birthDate')?.errors?.['tooOld']) {
+                  <div>العمر المدخل غير منطقي</div>
+                }
+              </div>
+            }
+          </div>
+        </fieldset>
+
+        <!-- Club Information Section -->
+        <fieldset class="mb-4">
+          <!-- Is in Club -->
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="isInClub" formControlName="isInClub">
+            <label class="form-check-label" for="isInClub">هل أنت عضو في نادي رياضي؟</label>
+          </div>
+
+          <!-- Club Name -->
+          @if (requestForm.get('isInClub')?.value) {
+            <div class="mb-4">
+              <label for="clubName" class="form-label">اسم النادي</label>
+              <input type="text" class="form-control" id="clubName" formControlName="clubName"
+                     [class.is-invalid]="requestForm.get('clubName')?.invalid && (requestForm.get('clubName')?.touched || isSubmitted)">
+              @if (requestForm.get('clubName')?.invalid && (requestForm.get('clubName')?.touched || isSubmitted)) {
+                <div class="invalid-feedback">
+                  @if (requestForm.get('clubName')?.errors?.['required']) {
+                    <div>حقل اسم النادي مطلوب</div>
+                  }
+                  @if (requestForm.get('clubName')?.errors?.['maxlength']) {
+                    <div>يجب ألا يتجاوز اسم النادي 100 حرف</div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </fieldset>
+
+        <fieldset class="mb-4">
+          <!-- Schengen Visa -->
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="hasSchengenVisa" formControlName="hasSchengenVisa">
+            <label class="form-check-label" for="hasSchengenVisa">هل لديك تأشيرة شينجن سارية؟</label>
+          </div>
+
+          @if (requestForm.get('hasSchengenVisa')?.value) {
+            <div class="mb-4">
+              <!-- Display existing visa file if available in edit mode -->
+              @if (isEditMode && visaFilePath) {
+                <div class="mb-2">
+                  <label class="form-label">الملف المرفوع مسبقًا:</label>
+                  @if (isImageFile(visaFilePath)) {
+                    <img [src]="visaFilePath" alt="تأشيرة الشنغن" class="img-thumbnail" style="max-width: 200px;">
+                  } @else {
+                    <a [href]="visaFilePath" target="_blank" class="btn btn-link">عرض ملف تأشيرة الشنغن</a>
+                  }
+                </div>
+              }
+              <label for="visaFile" class="form-label">رفع صورة تأشيرة الشنغن (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
+              <input type="file" class="form-control" id="visaFile" (change)="onFileChange($event, 'visaFile')"
+                     accept=".pdf,.jpg,.jpeg,.png"
+                     [class.is-invalid]="requestForm.get('visaFile')?.invalid && (requestForm.get('visaFile')?.touched || isSubmitted)">
+              @if (requestForm.get('visaFile')?.invalid && (requestForm.get('visaFile')?.touched || isSubmitted)) {
+                <div class="invalid-feedback">
+                  @if (requestForm.get('visaFile')?.errors?.['required']) {
+                    <div>حقل تأشيرة الشنغن مطلوب</div>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          <!-- Parent Approval -->
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="hasParentApproval" formControlName="hasParentApproval">
+            <label class="form-check-label" for="hasParentApproval">هل لديك موافقة ولي الأمر؟ (للمتقدمين تحت 18 سنة)</label>
+          </div>
+
+          @if (requestForm.get('hasParentApproval')?.value) {
+            <div class="mb-4">
+              <!-- Display existing approval file if available in edit mode -->
+              @if (isEditMode && approvalFilePath) {
+                <div class="mb-2">
+                  <label class="form-label">الملف المرفوع مسبقًا:</label>
+                  @if (isImageFile(approvalFilePath)) {
+                    <img [src]="approvalFilePath" alt="موافقة ولي الأمر" class="img-thumbnail" style="max-width: 200px;">
+                  } @else {
+                    <a [href]="approvalFilePath" target="_blank" class="btn btn-link">عرض ملف موافقة ولي الأمر</a>
+                  }
+                </div>
+              }
+              <label for="approvalFile" class="form-label">رفع موافقة ولي الأمر (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
+              <input type="file" class="form-control" id="approvalFile" (change)="onFileChange($event, 'approvalFile')"
+                     accept=".pdf,.jpg,.jpeg,.png"
+                     [class.is-invalid]="requestForm.get('approvalFile')?.invalid && (requestForm.get('approvalFile')?.touched || isSubmitted)">
+              @if (requestForm.get('approvalFile')?.invalid && (requestForm.get('approvalFile')?.touched || isSubmitted)) {
+                <div class="invalid-feedback">
+                  @if (requestForm.get('approvalFile')?.errors?.['required']) {
+                    <div>حقل موافقة ولي الأمر مطلوب</div>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          <!-- Subscription -->
+          <fieldset class="mb-4">
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="checkbox" id="subscription" formControlName="subscription">
+              <label class="form-check-label" for="subscription">اشتراك</label>
+              @if (requestForm.get('subscription')?.invalid && (requestForm.get('subscription')?.touched || isSubmitted)) {
+                <div class="invalid-feedback">
+                  <div>حقل الاشتراك مطلوب</div>
+                </div>
+              }
+            </div>
+          </fieldset>
+
+          <!-- Subscription-dependent fields -->
+          @if (requestForm.get('subscription')?.value) {
+            <!-- Identity Document -->
+            <div class="mb-4">
+              @if (isEditMode && identityDocumentPath) {
+                <div class="mb-2">
+                  <label class="form-label">وثيقة الهوية المرفوعة مسبقًا:</label>
+                  @if (isImageFile(identityDocumentPath)) {
+                    <img [src]="identityDocumentPath" alt="وثيقة الهوية" class="img-thumbnail" style="max-width: 200px;">
+                  } @else {
+                    <a [href]="identityDocumentPath" target="_blank" class="btn btn-link">عرض وثيقة الهوية</a>
+                  }
+                </div>
+              }
+              <label for="identityDocument" class="form-label">رفع وثيقة الهوية (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
+              <input type="file" class="form-control" id="identityDocument" (change)="onFileChange($event, 'identityDocument')"
+                     accept=".pdf,.jpg,.jpeg,.png"
+                     [class.is-invalid]="requestForm.get('identityDocument')?.invalid && (requestForm.get('identityDocument')?.touched || isSubmitted)">
+              @if (requestForm.get('identityDocument')?.invalid && (requestForm.get('identityDocument')?.touched || isSubmitted)) {
+                <div class="invalid-feedback">
+                  @if (requestForm.get('identityDocument')?.errors?.['required']) {
+                    <div>حقل وثيقة الهوية مطلوب</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Passport Copy -->
+            <div class="mb-4">
+              @if (isEditMode && passportCopyPath) {
+                <div class="mb-2">
+                  <label class="form-label">نسخة جواز السفر المرفوعة مسبقًا:</label>
+                  @if (isImageFile(passportCopyPath)) {
+                    <img [src]="passportCopyPath" alt="نسخة جواز السفر" class="img-thumbnail" style="max-width: 200px;">
+                  } @else {
+                    <a [href]="passportCopyPath" target="_blank" class="btn btn-link">عرض نسخة جواز السفر</a>
+                  }
+                </div>
+              }
+              <label for="passportCopy" class="form-label">رفع نسخة جواز السفر (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
+          
+
+              <input type="file" class="form-control" id="passportCopy" (change)="onFileChange($event, 'passportCopy')"
+                     accept=".pdf,.jpg,.jpeg,.png"
+                     [class.is-invalid]="requestForm.get('passportCopy')?.invalid && (requestForm.get('passportCopy')?.touched || isSubmitted)">
+              @if (requestForm.get('passportCopy')?.invalid && (requestForm.get('passportCopy')?.touched || isSubmitted)) {
+                <div class="invalid-feedback">
+                  @if (requestForm.get('passportCopy')?.errors?.['required']) {
+                    <div>حقل نسخة جواز السفر مطلوب</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Official Permission Letter -->
+            <div class="mb-4">
+              @if (isEditMode && officialPermissionLetterPath) {
+                <div class="mb-2">
+                  <label class="form-label">خطاب الإذن الرسمي المرفوع مسبقًا:</label>
+                  @if (isImageFile(officialPermissionLetterPath)) {
+                    <img [src]="officialPermissionLetterPath" alt="خطاب الإذن الرسمي" class="img-thumbnail" style="max-width: 200px;">
+                  } @else {
+                    <a [href]="officialPermissionLetterPath" target="_blank" class="btn btn-link">عرض خطاب الإذن الرسمي</a>
+                  }
+                </div>
+              }
+              <label for="officialPermissionLetter" class="form-label">رفع خطاب الإذن الرسمي (اختياري)</label>
+              <input type="file" class="form-control" id="officialPermissionLetter" (change)="onFileChange($event, 'officialPermissionLetter')"
+                     accept=".pdf,.jpg,.jpeg,.png"
+                     [class.is-invalid]="requestForm.get('officialPermissionLetter')?.invalid && (requestForm.get('officialPermissionLetter')?.touched || isSubmitted)">
+              @if (requestForm.get('officialPermissionLetter')?.invalid && (requestForm.get('officialPermissionLetter')?.touched || isSubmitted)) {
+                <div class="invalid-feedback">
+                  @if (requestForm.get('officialPermissionLetter')?.errors?.['required']) {
+                    <div>حقل خطاب الإذن الرسمي مطلوب</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Payment Instructions -->
+            <div class="mb-4 payment-instructions">
+              <img src="assets/img/download.png" alt="QR Code للدفع" class="qr-code">
+              <div class="payment-details">
+                <span class="payment-label">ادفع إلى:</span>
+                <span class="account-number">SA1234567890123456789012</span>
+              </div>
+            </div>
+
+            <!-- Payment Receipt -->
+            <div class="mb-4">
+              @if (isEditMode && paymentReceiptPath) {
+                <div class="mb-2">
+                  <label class="form-label">إيصال الدفع المرفوع مسبقًا:</label>
+                  @if (isImageFile(paymentReceiptPath)) {
+                    <img [src]="paymentReceiptPath" alt="إيصال الدفع" class="img-thumbnail" style="max-width: 200px;">
+                  } @else {
+                    <a [href]="paymentReceiptPath" target="_blank" class="btn btn-link">عرض إيصال الدفع</a>
+                  }
+                </div>
+              }
+              <label for="paymentReceipt" class="form-label">رفع إيصال الدفع (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
+              <input type="file" class="form-control" id="paymentReceipt" (change)="onFileChange($event, 'paymentReceipt')"
+                     accept=".pdf,.jpg,.jpeg,.png"
+                     [class.is-invalid]="requestForm.get('paymentReceipt')?.invalid && (requestForm.get('paymentReceipt')?.touched || isSubmitted)">
+              @if (requestForm.get('paymentReceipt')?.invalid && (requestForm.get('paymentReceipt')?.touched || isSubmitted)) {
+                <div class="invalid-feedback">
+                  @if (requestForm.get('paymentReceipt')?.errors?.['required']) {
+                    <div>حقل إيصال الدفع مطلوب</div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </fieldset>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg" [disabled]="isLoading">
+            @if (isLoading) {
+              <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            }
+            {{ isEditMode ? 'تحديث الطلب' : 'تقديم الطلب' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@ import { authGuard } from '../Gurds/auth.guard';
 import { UserRquestComponent } from '../components/user-rquest/user-rquest.component';
 import { EditRequestComponent } from '../components/Admin-Dashboard/edit-request/edit-request.component';
 import { AboutUsFormComponent } from '../components/Admin-Dashboard/about-us-form/about-us-form.component';
+import { AddRequetAdminComponent } from '../components/add-requet-admin/add-requet-admin.component';
 
 
 
@@ -39,7 +40,8 @@ export const routes: Routes = [
       { path: 'about-us', component: AboutUsListComponent },
       { path: 'about-us/add', component: AboutUsFormComponent },
       { path: 'about-us/edit/:id', component: AboutUsFormComponent },
-      { path: 'edit-request/:id', component: EditRequestComponent }
+      { path: 'edit-request/:id', component: EditRequestComponent },
+      { path: 'adminaddrequest', component: AddRequetAdminComponent },
 
     ],
   },

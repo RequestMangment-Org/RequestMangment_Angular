@@ -1,4 +1,4 @@
-/* أنيميشن التحميل والتظهر */
+
 .fade-in {
     opacity: 0;
     animation: fadeIn 1s ease-in-out forwards;
@@ -15,7 +15,7 @@
     }
 }
 
-/* تأثيرات البطاقات */
+
 .card {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform: translateY(0);
@@ -56,7 +56,6 @@
     font-size: 0.9rem;
 }
 
-/* تأثيرات الصناديق (الرؤية والرسالة والقيم) */
 .value-box {
     transition: all 0.4s ease;
     height: 100%;
@@ -82,7 +81,7 @@
     color: transparent;
 }
 
-/* أنيميشن العنوان الرئيسي */
+
 .display-4 {
     position: relative;
     animation: titleAnimation 1.2s ease-out forwards;
@@ -100,7 +99,7 @@
     }
 }
 
-/* تأثيرات الصور */
+
 .img-hover {
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border-radius: 12px;
@@ -112,7 +111,7 @@
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* تأثيرات الأزرار */
+
 .btn {
     transition: all 0.3s ease;
     font-weight: 600;
@@ -130,7 +129,7 @@
     color: #2c3e50 !important;
 }
 
-/* زر CTA متحرك */
+
 .pulse-animation {
     animation: pulse 2s infinite;
     box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
@@ -151,7 +150,7 @@
     }
 }
 
-/* تأثيرات النمو عند الهوفر */
+
 .hover-grow {
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -160,12 +159,11 @@
     transform: scale(1.05);
 }
 
-/* الظلال الناعمة */
 .shadow-soft {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
-/* تأثيرات القسم CTA */
+
 .cta {
     background: linear-gradient(135deg, #3498db, #2ecc71);
     position: relative;
@@ -188,13 +186,13 @@
     to { transform: rotate(360deg); }
 }
 
-/* التأخير في ظهور العناصر */
+
 .fade-in:nth-child(1) { animation-delay: 0.1s; }
 .fade-in:nth-child(2) { animation-delay: 0.3s; }
 .fade-in:nth-child(3) { animation-delay: 0.5s; }
 .fade-in:nth-child(4) { animation-delay: 0.7s; }
 
-/* التنسيق العام */
+
 body {
     font-family: 'Tajawal', sans-serif;
     color: #34495e;
