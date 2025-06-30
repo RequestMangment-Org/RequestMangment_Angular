@@ -38,7 +38,8 @@ export class RequestComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private requestService: RequestServiceService,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {
     this.requestForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.maxLength(100)]],
@@ -124,7 +125,8 @@ export class RequestComponent implements OnInit {
   }
 
   private formatDate(date: Date): string {
-    return new Date(date).toISOString().split('T')[0];
+      if (!date) return '';
+  return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
 
   private updateFileValidation(): void {
@@ -517,4 +519,12 @@ export class RequestComponent implements OnInit {
     if (!filePath) return false;
     return filePath.endsWith('.jpg') || filePath.endsWith('.jpeg') || filePath.endsWith('.png');
   }
+  
+  toggleSubscription() {
+  const currentValue = this.requestForm.get('subscription')?.value;
+  this.requestForm.get('subscription')?.setValue(!currentValue);
+  
+  
+  this.requestForm.updateValueAndValidity();
+}
 }

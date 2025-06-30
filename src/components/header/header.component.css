@@ -49,3 +49,24 @@ body {
         max-height: 40px;
     }
 }
+.footer-subheader {
+   
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-subheader p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.footer-subheader a {
+    color: #4fd1c5; /* لون أكوا */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-subheader a:hover {
+    color: #38b2ac;
+}

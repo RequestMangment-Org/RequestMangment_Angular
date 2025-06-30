@@ -520,4 +520,11 @@ export class AddRequetAdminComponent implements OnInit {
     if (!filePath) return false;
     return filePath.endsWith('.jpg') || filePath.endsWith('.jpeg') || filePath.endsWith('.png');
   }
+    toggleSubscription() {
+  const currentValue = this.requestForm.get('subscription')?.value;
+  this.requestForm.get('subscription')?.setValue(!currentValue);
+  
+  
+  this.requestForm.updateValueAndValidity();
+}
 }

@@ -176,18 +176,17 @@
               }
             </div>
           }
-
+<div class="file-section">
           <!-- Subscription -->
           <fieldset class="mb-4">
-            <div class="form-check mb-4">
-              <input class="form-check-input" type="checkbox" id="subscription" formControlName="subscription">
-              <label class="form-check-label" for="subscription">اشتراك</label>
-              @if (requestForm.get('subscription')?.invalid && (requestForm.get('subscription')?.touched || isSubmitted)) {
-                <div class="invalid-feedback">
-                  <div>حقل الاشتراك مطلوب</div>
-                </div>
-              }
-            </div>
+           <div class="mb-3">
+  <button type="button" 
+          class="btn btn-outline-primary subscription-btn"
+          [class.btn-primary]="requestForm.get('subscription')?.value"
+          (click)="toggleSubscription()">
+    {{ requestForm.get('subscription')?.value ? '✓ مشترك' : 'اشتراك' }}
+  </button>
+</div>
           </fieldset>
 
           <!-- Subscription-dependent fields -->
@@ -303,6 +302,7 @@
               }
             </div>
           }
+          </div>
         </fieldset>
 
         <!-- Submit Button -->

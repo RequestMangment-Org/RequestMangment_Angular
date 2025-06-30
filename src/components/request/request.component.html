@@ -85,225 +85,187 @@
           </div>
         </fieldset>
 
-        <!-- Club Information Section -->
-        <fieldset class="mb-4">
-          <!-- Is in Club -->
-          <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="isInClub" formControlName="isInClub">
-            <label class="form-check-label" for="isInClub">هل أنت عضو في نادي رياضي؟</label>
-          </div>
-
-          <!-- Club Name -->
-          @if (requestForm.get('isInClub')?.value) {
-            <div class="mb-4">
-              <label for="clubName" class="form-label">اسم النادي</label>
-              <input type="text" class="form-control" id="clubName" formControlName="clubName"
-                     [class.is-invalid]="requestForm.get('clubName')?.invalid && (requestForm.get('clubName')?.touched || isSubmitted)">
-              @if (requestForm.get('clubName')?.invalid && (requestForm.get('clubName')?.touched || isSubmitted)) {
-                <div class="invalid-feedback">
-                  @if (requestForm.get('clubName')?.errors?.['required']) {
-                    <div>حقل اسم النادي مطلوب</div>
-                  }
-                  @if (requestForm.get('clubName')?.errors?.['maxlength']) {
-                    <div>يجب ألا يتجاوز اسم النادي 100 حرف</div>
-                  }
-                </div>
-              }
-            </div>
-          }
-        </fieldset>
+     <div class="file-section">
+  <!-- Is in Club -->
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" id="isInClub" formControlName="isInClub">
+    <label class="form-check-label" for="isInClub">هل أنت عضو في نادي رياضي؟</label>
+  </div>
+  <div *ngIf="requestForm.get('isInClub')?.value">
+    <label for="clubName" class="form-label">اسم النادي</label>
+    <input type="text" class="form-control" id="clubName" formControlName="clubName"
+           [class.is-invalid]="requestForm.get('clubName')?.invalid && (requestForm.get('clubName')?.touched || isSubmitted)">
+    
+    <div class="invalid-feedback" *ngIf="requestForm.get('clubName')?.invalid && (requestForm.get('clubName')?.touched || isSubmitted)">
+      <div *ngIf="requestForm.get('clubName')?.errors?.['required']">حقل اسم النادي مطلوب</div>
+      <div *ngIf="requestForm.get('clubName')?.errors?.['maxlength']">يجب ألا يتجاوز اسم النادي 100 حرف</div>
+    </div>
+  </div>
+</div>
 
   
 
         <fieldset class="mb-4">
-          <!-- Schengen Visa -->
-          <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="hasSchengenVisa" formControlName="hasSchengenVisa">
-            <label class="form-check-label" for="hasSchengenVisa">هل لديك تأشيرة شينجن سارية؟</label>
-          </div>
+   <div class="file-section">
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" id="hasSchengenVisa" formControlName="hasSchengenVisa">
+    <label class="form-check-label" for="hasSchengenVisa">
+      هل لديك تأشيرة شينجن سارية؟
+    </label>
+  </div>
 
-          @if (requestForm.get('hasSchengenVisa')?.value) {
-            <div class="mb-4">
-              <!-- Display existing visa file if available in edit mode -->
-              @if (isEditMode && visaFilePath) {
-                <div class="mb-2">
-                  <label class="form-label">الملف المرفوع مسبقًا:</label>
-                  @if (isImageFile(visaFilePath)) {
-                    <img [src]="visaFilePath" alt="تأشيرة الشنغن" class="img-thumbnail" style="max-width: 200px;">
-                  } @else {
-                    <a [href]="visaFilePath" target="_blank" class="btn btn-link">عرض ملف تأشيرة الشنغن</a>
-                  }
-                </div>
-              }
-              <label for="visaFile" class="form-label">رفع صورة تأشيرة الشنغن (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
-              <input type="file" class="form-control" id="visaFile" (change)="onFileChange($event, 'visaFile')"
-                     accept=".pdf,.jpg,.jpeg,.png"
-                     [class.is-invalid]="requestForm.get('visaFile')?.invalid && (requestForm.get('visaFile')?.touched || isSubmitted)">
-              @if (requestForm.get('visaFile')?.invalid && (requestForm.get('visaFile')?.touched || isSubmitted)) {
-                <div class="invalid-feedback">
-                  @if (requestForm.get('visaFile')?.errors?.['required']) {
-                    <div>حقل تأشيرة الشنغن مطلوب</div>
-                  }
-                </div>
-              }
-            </div>
-          }
+  
+  <ng-container *ngIf="requestForm.get('hasSchengenVisa')?.value">
+    
+    <div class="mb-2" *ngIf="isEditMode && visaFilePath">
+      <label class="form-label">الملف المرفوع مسبقًا:</label>
+      <ng-container *ngIf="isImageFile(visaFilePath); else fileLink">
+        <img [src]="visaFilePath" alt="تأشيرة الشنغن" class="img-thumbnail" style="max-width: 200px;">
+      </ng-container>
+      <ng-template #fileLink>
+        <a [href]="visaFilePath" target="_blank" class="btn btn-link">عرض ملف تأشيرة الشنغن</a>
+      </ng-template>
+    </div>
 
-          <!-- Parent Approval -->
-          <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="hasParentApproval" formControlName="hasParentApproval">
-            <label class="form-check-label" for="hasParentApproval">هل لديك موافقة ولي الأمر؟ (للمتقدمين تحت 18 سنة)</label>
-          </div>
+  
+    <label for="visaFile" class="form-label">رفع تأشيرة الشنغن</label>
+    <input type="file" class="form-control" id="visaFile" (change)="onFileChange($event, 'visaFile')"
+           accept=".pdf,.jpg,.jpeg,.png"
+           [class.is-invalid]="requestForm.get('visaFile')?.invalid && (requestForm.get('visaFile')?.touched || isSubmitted)">
 
-          @if (requestForm.get('hasParentApproval')?.value) {
-            <div class="mb-4">
-              <!-- Display existing approval file if available in edit mode -->
-              @if (isEditMode && approvalFilePath) {
-                <div class="mb-2">
-                  <label class="form-label">الملف المرفوع مسبقًا:</label>
-                  @if (isImageFile(approvalFilePath)) {
-                    <img [src]="approvalFilePath" alt="موافقة ولي الأمر" class="img-thumbnail" style="max-width: 200px;">
-                  } @else {
-                    <a [href]="approvalFilePath" target="_blank" class="btn btn-link">عرض ملف موافقة ولي الأمر</a>
-                  }
-                </div>
-              }
-              <label for="approvalFile" class="form-label">رفع موافقة ولي الأمر (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
-              <input type="file" class="form-control" id="approvalFile" (change)="onFileChange($event, 'approvalFile')"
-                     accept=".pdf,.jpg,.jpeg,.png"
-                     [class.is-invalid]="requestForm.get('approvalFile')?.invalid && (requestForm.get('approvalFile')?.touched || isSubmitted)">
-              @if (requestForm.get('approvalFile')?.invalid && (requestForm.get('approvalFile')?.touched || isSubmitted)) {
-                <div class="invalid-feedback">
-                  @if (requestForm.get('approvalFile')?.errors?.['required']) {
-                    <div>حقل موافقة ولي الأمر مطلوب</div>
-                  }
-                </div>
-              }
-            </div>
-          }
-      <!-- Subscription -->
-        <fieldset class="mb-4">
-          <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="subscription" formControlName="subscription">
-            <label class="form-check-label" for="subscription">اشتراك</label>
-            @if (requestForm.get('subscription')?.invalid && (requestForm.get('subscription')?.touched || isSubmitted)) {
-              <div class="invalid-feedback">
-                <div>حقل الاشتراك مطلوب</div>
-              </div>
-            }
-          </div>
-        </fieldset>
-          <!-- Subscription-dependent fields -->
-          @if (requestForm.get('subscription')?.value) {
-            <!-- Identity Document -->
-            <div class="mb-4">
-              @if (isEditMode && identityDocumentPath) {
-                <div class="mb-2">
-                  <label class="form-label">وثيقة الهوية المرفوعة مسبقًا:</label>
-                  @if (isImageFile(identityDocumentPath)) {
-                    <img [src]="identityDocumentPath" alt="وثيقة الهوية" class="img-thumbnail" style="max-width: 200px;">
-                  } @else {
-                    <a [href]="identityDocumentPath" target="_blank" class="btn btn-link">عرض وثيقة الهوية</a>
-                  }
-                </div>
-              }
-              <label for="identityDocument" class="form-label">رفع وثيقة الهوية (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
-              <input type="file" class="form-control" id="identityDocument" (change)="onFileChange($event, 'identityDocument')"
-                     accept=".pdf,.jpg,.jpeg,.png"
-                     [class.is-invalid]="requestForm.get('identityDocument')?.invalid && (requestForm.get('identityDocument')?.touched || isSubmitted)">
-              @if (requestForm.get('identityDocument')?.invalid && (requestForm.get('identityDocument')?.touched || isSubmitted)) {
-                <div class="invalid-feedback">
-                  @if (requestForm.get('identityDocument')?.errors?.['required']) {
-                    <div>حقل وثيقة الهوية مطلوب</div>
-                  }
-                </div>
-              }
-            </div>
+    <div class="invalid-feedback" *ngIf="requestForm.get('visaFile')?.invalid && (requestForm.get('visaFile')?.touched || isSubmitted)">
+      <div *ngIf="requestForm.get('visaFile')?.errors?.['required']">الملف مطلوب</div>
+    </div>
+  </ng-container>
+</div>
 
-            <!-- Passport Copy -->
-            <div class="mb-4">
-              @if (isEditMode && passportCopyPath) {
-                <div class="mb-2">
-                  <label class="form-label">نسخة جواز السفر المرفوعة مسبقًا:</label>
-                  @if (isImageFile(passportCopyPath)) {
-                    <img [src]="passportCopyPath" alt="نسخة جواز السفر" class="img-thumbnail" style="max-width: 200px;">
-                  } @else {
-                    <a [href]="passportCopyPath" target="_blank" class="btn btn-link">عرض نسخة جواز السفر</a>
-                  }
-                </div>
-              }
-              <label for="passportCopy" class="form-label">رفع نسخة جواز السفر (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
-              <input type="file" class="form-control" id="passportCopy" (change)="onFileChange($event, 'passportCopy')"
-                     accept=".pdf,.jpg,.jpeg,.png"
-                     [class.is-invalid]="requestForm.get('passportCopy')?.invalid && (requestForm.get('passportCopy')?.touched || isSubmitted)">
-              @if (requestForm.get('passportCopy')?.invalid && (requestForm.get('passportCopy')?.touched || isSubmitted)) {
-                <div class="invalid-feedback">
-                  @if (requestForm.get('passportCopy')?.errors?.['required']) {
-                    <div>حقل نسخة جواز السفر مطلوب</div>
-                  }
-                </div>
-              }
-            </div>
+        <div class="file-section">
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" id="hasParentApproval" formControlName="hasParentApproval">
+    <label class="form-check-label" for="hasParentApproval">هل لديك موافقة ولي الأمر؟</label>
+  </div>
 
-            <!-- Official Permission Letter -->
-            <div class="mb-4">
-              @if (isEditMode && officialPermissionLetterPath) {
-                <div class="mb-2">
-                  <label class="form-label">خطاب الإذن الرسمي المرفوع مسبقًا:</label>
-                  @if (isImageFile(officialPermissionLetterPath)) {
-                    <img [src]="officialPermissionLetterPath" alt="خطاب الإذن الرسمي" class="img-thumbnail" style="max-width: 200px;">
-                  } @else {
-                    <a [href]="officialPermissionLetterPath" target="_blank" class="btn btn-link">عرض خطاب الإذن الرسمي</a>
-                  }
-                </div>
-              }
-              <label for="officialPermissionLetter" class="form-label">رفع خطاب الإذن الرسمي (اختياري)</label>
-              <input type="file" class="form-control" id="officialPermissionLetter" (change)="onFileChange($event, 'officialPermissionLetter')"
-                     accept=".pdf,.jpg,.jpeg,.png"
-                     [class.is-invalid]="requestForm.get('officialPermissionLetter')?.invalid && (requestForm.get('officialPermissionLetter')?.touched || isSubmitted)">
-              @if (requestForm.get('officialPermissionLetter')?.invalid && (requestForm.get('officialPermissionLetter')?.touched || isSubmitted)) {
-                <div class="invalid-feedback">
-                  @if (requestForm.get('officialPermissionLetter')?.errors?.['required']) {
-                    <div>حقل خطاب الإذن الرسمي مطلوب</div>
-                  }
-                </div>
-              }
-            </div>
+  @if (requestForm.get('hasParentApproval')?.value) {
+    @if (isEditMode && approvalFilePath) {
+      <div class="mb-2">
+        <label class="form-label">الملف المرفوع مسبقًا:</label>
+        @if (isImageFile(approvalFilePath)) {
+          <img [src]="approvalFilePath" alt="موافقة ولي الأمر" class="img-thumbnail" style="max-width: 200px;">
+        } @else {
+          <a [href]="approvalFilePath" target="_blank" class="btn btn-link">عرض ملف موافقة ولي الأمر</a>
+        }
+      </div>
+    }
 
-            <!-- Payment Instructions -->
-            <div class="mb-4 payment-instructions">
-              <img src="assets\img\download.png" alt="QR Code للدفع" class="qr-code">
-              <div class="payment-details">
-                <span class="payment-label">ادفع إلى:</span>
-                <span class="account-number">SA1234567890123456789012</span>
-              </div>
-            </div>
+    <label for="approvalFile" class="form-label">رفع موافقة ولي الأمر</label>
+    <input type="file" class="form-control" id="approvalFile" (change)="onFileChange($event, 'approvalFile')" 
+           accept=".pdf,.jpg,.jpeg,.png"
+           [class.is-invalid]="requestForm.get('approvalFile')?.invalid && (requestForm.get('approvalFile')?.touched || isSubmitted)">
+    
+    @if (requestForm.get('approvalFile')?.invalid && (requestForm.get('approvalFile')?.touched || isSubmitted)) {
+      <div class="invalid-feedback">الملف مطلوب</div>
+    }
+  }
+</div>
+     <div class="file-section">
+ <div class="mb-3">
+  <button type="button" 
+          class="btn btn-outline-primary subscription-btn"
+          [class.btn-primary]="requestForm.get('subscription')?.value"
+          (click)="toggleSubscription()">
+    {{ requestForm.get('subscription')?.value ? '✓ مشترك' : 'اشتراك' }}
+  </button>
+</div>
+  @if (requestForm.get('subscription')?.value) {
 
-            <!-- Payment Receipt -->
-            <div class="mb-4">
-              @if (isEditMode && paymentReceiptPath) {
-                <div class="mb-2">
-                  <label class="form-label">إيصال الدفع المرفوع مسبقًا:</label>
-                  @if (isImageFile(paymentReceiptPath)) {
-                    <img [src]="paymentReceiptPath" alt="إيصال الدفع" class="img-thumbnail" style="max-width: 200px;">
-                  } @else {
-                    <a [href]="paymentReceiptPath" target="_blank" class="btn btn-link">عرض إيصال الدفع</a>
-                  }
-                </div>
-              }
-              <label for="paymentReceipt" class="form-label">رفع إيصال الدفع (لاستبدال الملف الحالي أو رفع ملف جديد)</label>
-              <input type="file" class="form-control" id="paymentReceipt" (change)="onFileChange($event, 'paymentReceipt')"
-                     accept=".pdf,.jpg,.jpeg,.png"
-                     [class.is-invalid]="requestForm.get('paymentReceipt')?.invalid && (requestForm.get('paymentReceipt')?.touched || isSubmitted)">
-              @if (requestForm.get('paymentReceipt')?.invalid && (requestForm.get('paymentReceipt')?.touched || isSubmitted)) {
-                <div class="invalid-feedback">
-                  @if (requestForm.get('paymentReceipt')?.errors?.['required']) {
-                    <div>حقل إيصال الدفع مطلوب</div>
-                  }
-                </div>
-              }
-            </div>
-          }
+    <!-- وثيقة الهوية -->
+    <div class="mb-3">
+      @if (isEditMode && identityDocumentPath) {
+        <label class="form-label">وثيقة الهوية المرفوعة مسبقًا:</label>
+        @if (isImageFile(identityDocumentPath)) {
+          <img [src]="identityDocumentPath" alt="وثيقة الهوية" class="img-thumbnail" style="max-width: 200px;">
+        } @else {
+          <a [href]="identityDocumentPath" target="_blank" class="btn btn-link">عرض وثيقة الهوية</a>
+        }
+      }
+
+      <label for="identityDocument" class="form-label">رفع وثيقة الهوية</label>
+      <input type="file" class="form-control" id="identityDocument" (change)="onFileChange($event, 'identityDocument')"
+             accept=".pdf,.jpg,.jpeg,.png"
+             [class.is-invalid]="requestForm.get('identityDocument')?.invalid && (requestForm.get('identityDocument')?.touched || isSubmitted)">
+      @if (requestForm.get('identityDocument')?.invalid && (requestForm.get('identityDocument')?.touched || isSubmitted)) {
+        <div class="invalid-feedback">وثيقة الهوية مطلوبة</div>
+      }
+    </div>
+
+    <!-- جواز السفر -->
+    <div class="mb-3">
+      @if (isEditMode && passportCopyPath) {
+        <label class="form-label">نسخة جواز السفر المرفوعة مسبقًا:</label>
+        @if (isImageFile(passportCopyPath)) {
+          <img [src]="passportCopyPath" alt="جواز السفر" class="img-thumbnail" style="max-width: 200px;">
+        } @else {
+          <a [href]="passportCopyPath" target="_blank" class="btn btn-link">عرض جواز السفر</a>
+        }
+      }
+
+      <label for="passportCopy" class="form-label">رفع جواز السفر</label>
+      <input type="file" class="form-control" id="passportCopy" (change)="onFileChange($event, 'passportCopy')"
+             accept=".pdf,.jpg,.jpeg,.png"
+             [class.is-invalid]="requestForm.get('passportCopy')?.invalid && (requestForm.get('passportCopy')?.touched || isSubmitted)">
+      @if (requestForm.get('passportCopy')?.invalid && (requestForm.get('passportCopy')?.touched || isSubmitted)) {
+        <div class="invalid-feedback">جواز السفر مطلوب</div>
+      }
+    </div>
+
+    <!-- خطاب الإذن الرسمي (اختياري) -->
+    <div class="mb-3">
+      @if (isEditMode && officialPermissionLetterPath) {
+        <label class="form-label">خطاب الإذن الرسمي المرفوع مسبقًا:</label>
+        @if (isImageFile(officialPermissionLetterPath)) {
+          <img [src]="officialPermissionLetterPath" alt="خطاب الإذن" class="img-thumbnail" style="max-width: 200px;">
+        } @else {
+          <a [href]="officialPermissionLetterPath" target="_blank" class="btn btn-link">عرض خطاب الإذن الرسمي</a>
+        }
+      }
+
+      <label for="officialPermissionLetter" class="form-label">رفع خطاب الإذن الرسمي (اختياري)</label>
+      <input type="file" class="form-control" id="officialPermissionLetter" (change)="onFileChange($event, 'officialPermissionLetter')"
+             accept=".pdf,.jpg,.jpeg,.png">
+    </div>
+
+    <!-- تعليمات الدفع -->
+    <div class="mb-3 payment-instructions">
+      <img src="assets/img/download.png" alt="QR Code للدفع" class="qr-code">
+      <div class="payment-details">
+        <span class="payment-label">ادفع إلى:</span>
+        <span class="account-number">SA1234567890123456789012</span>
+      </div>
+    </div>
+
+    <!-- إيصال الدفع -->
+    <div class="mb-3">
+      @if (isEditMode && paymentReceiptPath) {
+        <label class="form-label">إيصال الدفع المرفوع مسبقًا:</label>
+        @if (isImageFile(paymentReceiptPath)) {
+          <img [src]="paymentReceiptPath" alt="إيصال الدفع" class="img-thumbnail" style="max-width: 200px;">
+        } @else {
+          <a [href]="paymentReceiptPath" target="_blank" class="btn btn-link">عرض إيصال الدفع</a>
+        }
+      }
+
+      <label for="paymentReceipt" class="form-label">رفع إيصال الدفع</label>
+      <input type="file" class="form-control" id="paymentReceipt" (change)="onFileChange($event, 'paymentReceipt')"
+             accept=".pdf,.jpg,.jpeg,.png"
+             [class.is-invalid]="requestForm.get('paymentReceipt')?.invalid && (requestForm.get('paymentReceipt')?.touched || isSubmitted)">
+      @if (requestForm.get('paymentReceipt')?.invalid && (requestForm.get('paymentReceipt')?.touched || isSubmitted)) {
+        <div class="invalid-feedback">إيصال الدفع مطلوب</div>
+      }
+    </div>
+
+  }
+</div>
+
         </fieldset>
 
         <!-- Submit Button -->
