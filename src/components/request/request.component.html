@@ -239,7 +239,10 @@
       <img src="assets/img/download.png" alt="QR Code للدفع" class="qr-code">
       <div class="payment-details">
         <span class="payment-label">ادفع إلى:</span>
-        <span class="account-number">SA1234567890123456789012</span>
+        <span class="account-number" id="accountToCopy">SA1234567890123456789012</span>
+         <button type="button" class="copy-btn" (click)="copyAccountNumber()">
+      <i class="fas fa-copy"></i> نسخ رقم الحساب
+    </button>
       </div>
     </div>
 

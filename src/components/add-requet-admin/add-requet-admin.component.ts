@@ -527,4 +527,25 @@ export class AddRequetAdminComponent implements OnInit {
   
   this.requestForm.updateValueAndValidity();
 }
+copyAccountNumber() {
+  const accountNumber = document.getElementById('accountToCopy')?.textContent;
+  if (accountNumber) {
+    navigator.clipboard.writeText(accountNumber)
+      .then(() => {
+        
+        const btn = document.querySelector('.copy-btn') as HTMLElement;
+        if (btn) {
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+          }, 10000);
+        }
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+        alert('حدث خطأ أثناء محاولة النسخ');
+      });
+  }
+}
 }

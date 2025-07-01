@@ -344,3 +344,26 @@
         font-size: 0.9rem;
     }
 }
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.copy-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.copy-btn i {
+  font-size: 14px;
+}
